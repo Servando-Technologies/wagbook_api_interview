@@ -83,7 +83,6 @@ app.get("/status", (req, res) => {
  * - The server should then start a countdown from that number down to 0.
  * - Every second, the server should send a message to the client with the current countdown value.
  * - The final message should be "0".
- * - You will need to modify the `countdown` function below.
  */
 
 wss.on("connection", (ws) => {
