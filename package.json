@@ -1,0 +1,21 @@
+{
+  "name": "wagbook-interview-challenge",
+  "version": "1.0.0",
+  "description": "A short coding challenge for Wagbook API candidates.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest index.test.js websocket.test.js",
+    "solution": "USE_SOLUTION=true USE_SHORTCUT=true npm test"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.18.3"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^30.0.4",
+    "supertest": "^7.1.1"
+  }
+}
