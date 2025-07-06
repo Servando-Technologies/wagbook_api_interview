@@ -1,6 +1,6 @@
 {
   "name": "wagbook-interview-challenge",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A short coding challenge for Wagbook API candidates.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,9 @@
     "test": "jest"
   },
   "jest": {
-    "setupFilesAfterEnv": ["./jest.setup.js"]
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ]
   },
   "dependencies": {
     "express": "^4.18.2",
