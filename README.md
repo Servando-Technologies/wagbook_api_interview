@@ -2,7 +2,7 @@
 
 Welcome to the Wagbook API team! This short coding exercise is designed to give us a sense of your skills in a realistic Node.js environment.
 
-This challenge should take anywhere from 10-30 minutes
+This challenge should take anywhere from 10-30 minutes.
 
 ## Setup
 
@@ -38,6 +38,14 @@ We have included a test suite to help you verify your work. To run the tests, us
 
 ```bash
 npm test
+```
+
+## Validation a Submission
+
+if you have a solution file, you can run the tests with the following command:
+
+```
+USE_FILE=solution npm test
 ```
 
 The tests cover all the requirements in the tasks. We encourage you to use them to check your progress.
