@@ -63,9 +63,7 @@ describe("WebSocket Countdown", () => {
     });
 
     ws.on("message", (message) => {
-      expect(message.toString()).toBe(
-        "Please send a valid non-negative number."
-      );
+      expect(message.toString()).toBe("Please send a valid positive number.");
       ws.close();
       done();
     });

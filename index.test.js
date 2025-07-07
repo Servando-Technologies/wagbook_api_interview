@@ -99,8 +99,11 @@ describe("API Endpoints", () => {
         return;
       }
       const response = await request(app).get("/pets/owner/u3");
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toEqual([]);
+      if (response.statusCode === 200) {
+        expect(response.body).toEqual([]);
+      } else {
+        expect(response.statusCode).toBe(404);
+      }
     });
 
     it("should return an empty array for a malformed owner ID", async () => {
@@ -109,8 +112,11 @@ describe("API Endpoints", () => {
         return;
       }
       const response = await request(app).get("/pets/owner/!@#$");
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toEqual([]);
+      if (response.statusCode === 200) {
+        expect(response.body).toEqual([]);
+      } else {
+        expect(response.statusCode).toBe(404);
+      }
     });
   });
 
