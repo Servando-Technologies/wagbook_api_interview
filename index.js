@@ -12,10 +12,22 @@ const wss = new WebSocket.Server({ server });
 const port = 3000;
 
 // --- Mock Database ---
-const mockPetDB = {
-  p1: { id: "p1", name: "Fido", species: "Dog", ownerId: "u1" },
-  p2: { id: "p2", name: "Whiskers", species: "Cat", ownerId: "u1" },
-  p3: { id: "p3", name: "Polly", species: "Bird", ownerId: "u2" },
+const mockDB = {
+  pets: [
+    { id: "p1", name: "Fido", species: "Dog", ownerId: "u1" },
+    { id: "p2", name: "Whiskers", species: "Cat", ownerId: "u1" },
+    { id: "p3", name: "Polly", species: "Bird", ownerId: "u2" },
+  ],
+  users: [
+    { id: "u1", name: "Alice" },
+    { id: "u2", name: "Bob" },
+    { id: "u3", name: "Charlie" },
+  ],
+};
+
+// Helper to generate unique IDs
+const generateId = (prefix) => {
+  return prefix + Math.random().toString(36).substr(2, 9);
 };
 
 app.use(express.json());
@@ -39,7 +51,7 @@ app.use(express.json());
  */
 
 app.get("/status", (req, res) => {
-  res.status(404).json({ error: "Not Implemented" });
+  res.status(501).json({ error: "Not Implemented" });
 });
 
 /*
@@ -56,38 +68,91 @@ app.get("/status", (req, res) => {
  *   - Send the complete pet object as the JSON response.
  * - If no pet is found, it should send a 404 Not Found.
  */
+app.get("/pets/:id", (req, res) => {
+  res.status(501).json({ error: "Not Implemented" });
+});
 
 /*
- * ## TASK 3: Create a New Endpoint to Fetch Pets by Owner
+ * ## TASK 3: Get Pets by Owner
  *
  * ### Objective:
  * Create a `GET /pets/owner/:ownerId` endpoint.
  *
  * ### Requirements:
- * - It should find all pets belonging to the owner specified by `ownerId`.
- * - It must send a 200 OK status code.
- * - It must send a JSON response containing an array of pet objects.
- * - If the owner has no pets, it should return an empty array `[]`.
+ * - It should find all pets belonging to a specific owner.
+ * - If pets are found, it should send a 200 OK status code and a JSON array of pet objects.
+ * - If no pets are found for the owner, it should send a 200 OK status code and an empty array.
+ * - If the owner does not exist, it should send a 404 Not Found status code.
  */
+app.get("/pets/owner/:ownerId", (req, res) => {
+  res.status(501).json({ error: "Not Implemented" });
+});
 
 /*
- * ## TASK 4: Implement a WebSocket Countdown
+ * ## TASK 4: Get Owner with Pets
  *
  * ### Objective:
- * Create a WebSocket endpoint that, upon receiving a message with a number,
- * starts a countdown and sends a message back to the client every second.
+ * Create a `GET /owner/:ownerId` endpoint.
  *
  * ### Requirements:
- * - When a client connects to the WebSocket server, it should be ready to receive messages.
- * - When a message is received, it should be parsed as a number.
- * - The server should then start a countdown from that number down to 0.
- * - Every second, the server should send a message to the client with the current countdown value.
- * - The final message should be "0".
- * - note: make sure you handle multiple concurrent clients :)
+ * - It should retrieve an owner's details along with a list of their pets.
+ * - The response should be a single owner object, with a nested array of pet objects.
+ * - If the owner is found, it should send a 200 OK status code.
+ * - If the owner is not found, it should send a 404 Not Found status code.
  */
+app.get("/owner/:ownerId", (req, res) => {
+  res.status(501).json({ error: "Not Implemented" });
+});
 
-wss.on("connection", (ws) => {
-  // YOUR CODE FOR TASK 4 HERE
+/*
+ * ## TASK 5: Create a New Pet
+ *
+ * ### Objective:
+ * Create a `POST /pets` endpoint to add a new pet.
+ *
+ * ### Requirements:
+ * - It must accept a JSON request body with `name`, `species`, and `ownerId`.
+ * - `ownerId` must correspond to an existing user in `mockDB.users`.
+ * - A unique `id` should be generated for the new pet.
+ * - It must send a 201 Created status code on success.
+ * - It must send a 400 Bad Request for invalid input (missing fields, invalid ownerId).
+ * - It must send a 404 Not Found if the `ownerId` does not exist.
+ */
+app.post("/pets", (req, res) => {
+  res.status(501).json({ error: "Not Implemented" });
+});
+
+/*
+ * ## TASK 6: Update a Pet
+ *
+ * ### Objective:
+ * Create a `PUT /pets/:id` endpoint to update an existing pet.
+ *
+ * ### Requirements:
+ * - It must accept a JSON request body with optional fields (`name`, `species`, `ownerId`).
+ * - If `ownerId` is provided, it must correspond to an existing user.
+ * - It must send a 200 OK status code on success.
+ * - It must send a 400 Bad Request for invalid input (e.g., invalid ownerId if provided).
+ * - It must send a 404 Not Found if the pet with the given `id` does not exist.
+ */
+app.put("/pets/:id", (req, res) => {
+  res.status(501).json({ error: "Not Implemented" });
+});
+
+/*
+ * ## TASK 7: Create a New Owner
+ *
+ * ### Objective:
+ * Create a `POST /owners` endpoint to add a new owner.
+ *
+ * ### Requirements:
+ * - It must accept a JSON request body with `name`.
+ * - A unique `id` should be generated for the new owner.
+ * - It must send a 201 Created status code on success.
+ * - It must send a 400 Bad Request for invalid input (missing name).
+ */
+app.post("/owners", (req, res) => {
+  res.status(501).json({ error: "Not Implemented" });
 });
 
 // --- Server Setup ---
@@ -98,3 +163,22 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 module.exports = { app, server }; // For testing
+
+// --- WebSocket Challenge ---
+
+/*
+ * ## TASK 8: WebSocket Countdown
+ *
+ * ### Objective:
+ * Implement a WebSocket handler that counts down from a given number.
+ *
+ * ### Requirements:
+ * - When a client connects, it should do nothing.
+ * - When a client sends a message, it should be a number (e.g., "5").
+ * - The server should then send a message back every second, counting down from that number.
+ * - When the countdown reaches 0, it should send "Blast off!" and close the connection.
+ * - If the message is not a valid number, it should send an error message and close the connection.
+ */
+wss.on("connection", (ws) => {
+  // Your WebSocket logic here
+});

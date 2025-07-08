@@ -1,8 +1,8 @@
 # Wagbook API Coding Challenge
 
-Welcome to the Wagbook API team! This short coding exercise is designed to give us a sense of your skills in a realistic Node.js environment.
+Welcome to the Wagbook API team! This short coding exercise is designed to give us a sense of some basic REST API and realtime websocket skills in a realistic Node.js environment.
 
-This challenge should take anywhere from 10-30 minutes.
+This challenge should take anywhere from 15-30 minutes.
 
 ## Setup
 
@@ -17,10 +17,14 @@ This challenge should take anywhere from 10-30 minutes.
 
 Your instructions are located as comments inside the `index.js` file. You will need to:
 
-1.  **Implement a new `GET /status` healthcheck endpoint.**
-2.  **Fix a bug in the existing `GET /pets/:id` endpoint.**
-3.  **Implement a new `GET /pets/owner/:ownerId` endpoint.**
-4.  **Implement a WebSocket countdown.**
+1.  **Implement a `GET /status` healthcheck endpoint.**
+2.  **Implement a `GET /pets/:id` endpoint.**
+3.  **Implement a `POST /pets` endpoint to add a new pet.**
+4.  **Implement a `PUT /pets/:id` endpoint to update a pet.**
+5.  **Implement a `POST /owners` endpoint to add a new owner.**
+6.  **Implement a `GET /pets/owner/:ownerId` endpoint to find pets by owner.**
+7.  **Implement a `GET /owner/:ownerId` endpoint to find an owner.**
+8.  **Implement a WebSocket countdown.**
 
 All the details and requirements are in the comments.
 
@@ -54,11 +58,29 @@ The tests cover all the requirements in the tasks. We encourage you to use them 
 
 If you prefer to test manually, you can use tools like `curl` or Postman:
 
-- `curl http://localhost:3000/status`
-- `curl http://localhost:3000/pets/p1`
-- `curl http://localhost:3000/pets/p99`
-- `curl http://localhost:3000/pets/owner/u1`
-- `curl http://localhost:3000/pets/owner/u3`
+- **Healthcheck:**
+  `curl http://localhost:3000/status`
+
+- **Get a specific pet:**
+  `curl http://localhost:3000/pets/p1`
+  `curl http://localhost:3000/pets/p99` (Not Found case)
+
+- **Add a new pet:**
+  `curl -X POST -H "Content-Type: application/json" -d '{"name": "Rex", "species": "Dog", "ownerId": "u1"}' http://localhost:3000/pets`
+
+- **Update a pet:**
+  `curl -X PUT -H "Content-Type: application/json" -d '{"name": "Fido Updated"}' http://localhost:3000/pets/p1`
+
+- **Add a new owner:**
+  `curl -X POST -H "Content-Type: application/json" -d '{"name": "David"}' http://localhost:3000/owners`
+
+- **Get pets by owner:**
+  `curl http://localhost:3000/pets/owner/u1`
+  `curl http://localhost:3000/pets/owner/u99` (Not Found case)
+
+- **Get a specific owner:**
+  `curl http://localhost:3000/owner/u1`
+  `curl http://localhost:3000/owner/u99` (Not Found case)
 
 ## Submission
 
